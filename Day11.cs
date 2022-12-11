@@ -25,7 +25,13 @@ for (var i = 0; i < input.Length;)
     i += 2;
 }
 
-for (var round = 0; round < 20; round++)
+var lcm = monkeys.Select(x => x.Modulus).Aggregate(1, (val, next) => next * val);
+
+// Part 1
+//for (var round = 0; round < 20; round++)
+
+// Part 2
+for (var round = 0; round < 10000; round++)
 {
     foreach (var monkey in monkeys)
     {
@@ -38,7 +44,11 @@ for (var round = 0; round < 20; round++)
             else
                 item.WorryLevel = item.WorryLevel * monkey.OpMultiplyBy + monkey.OpAddTo;
 
-            item.WorryLevel /= 3;
+            // Part 1
+            //item.WorryLevel /= 3;
+
+            // Part 2
+            item.WorryLevel %= lcm;
 
             if (item.WorryLevel % monkey.Modulus == 0)
             {
@@ -69,7 +79,7 @@ class Monkey
 
     public List<Item> Items { get; set; }
 
-    public int InspectionCount { get; set; }
+    public long InspectionCount { get; set; }
 
     public int OpMultiplyBy { get; set; } = 1;
 
@@ -86,7 +96,7 @@ class Monkey
 
 class Item
 {
-    public int WorryLevel { get; set; }
+    public long WorryLevel { get; set; }
 
     public string ThrownTo { get; set; }
 }
